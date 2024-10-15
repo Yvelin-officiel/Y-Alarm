@@ -25,20 +25,19 @@ samples, guidance on mobile development, and a full API reference.
  - Page de création/modification de groupe d'alarme
  - Page calendrier 
  - Page de paramètre (optionnel)
+
 ### fonctionnalités attendues:
-- [ ] 1. L'utilisateur peut ajouter/supprimer/modifier un réveil
-- [ ] 2. L'utilisateur peut voir la liste des réveils
-- [ ] 3. L'utilisateur peut importer un planning
-- [ ] 4. L'utilisateur peut consulter son planning
-- [ ] 5. L'utilisateur peut supprimer un planning
-- [ ] 6. L'utilisateur peut paramétrer un réveil a partir de son planning
-- [ ] 7. L'utilisateur peut paramétrer différents réveils de préparation
-- [ ] 8. L'alarme énonce le planning de la journée
-- [ ] 9. L'alarme énonce les réveils de préparation
-- [ ] 10. L'alarme joue une musique de fond
-- [ ] 11. L'utilisateur peut paramétrer une musique de fond
+- [ ] 1. L'utilisateur peut ajouter/supprimer/modifier un groupe de réveil
+- [ ] 2. L'utilisateur peut ajouter/supprimer/modifier des réveils dans un groupe
+- [ ] 3. L'utilisateur peut voir la liste de ses groupes de réveils 
+- [ ] 4. L'utilisateur peut importer/consulter/supprimer un planning
+- [ ] 5. L'utilisateur peut paramétrer un réveil a partir de son planning
+- [ ] 6. L'alarme énonce le planning de la journée
+- [ ] 7. L'alarme joue une musique de fond
+- [ ] 8. L'utilisateur peut paramétrer une musique de fond
 
 ### fonctionnalités bonus:
-- [ ] 12. L'alarme joue des musique aléatoires
-- [ ] 13. L'alarme énonce la météo du jour
-- [ ] 14. L'alarme énonce des facts aléatoires (relativement fausses)
+- [ ] 9. L'alarme joue des musique aléatoires
+- [ ] 10. L'alarme énonce la météo du jour
+- [ ] 11. L'alarme énonce des facts aléatoires (relativement fausses)
+- [ ] 12. L'alarme énonce les réveils de préparation

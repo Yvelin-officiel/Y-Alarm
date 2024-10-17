@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:y_alarm/calendar/models/event.dart';
 import 'package:y_alarm/calendar/service/event_controller.dart';

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:y_alarm/calendar/models/event.dart';
+import 'package:y_alarm/calendar/service/event_controller.dart';
 
 import 'package:y_alarm/calendar/widget/Calendar_page.dart';
+import 'package:y_alarm/calendar/widget/calendar_event.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,10 +62,40 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: const Center(
+      body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [],
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 300,
+              child: FutureBuilder(
+                future: EventController.instance.getForDay(DateTime.now()),
+                builder: (context, AsyncSnapshot<List<Event>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+
+                  ValueNotifier<List<Event>> _selectedEvents = ValueNotifier(snapshot.data ?? []);
+                  return ValueListenableBuilder<List<Event>>(
+                    valueListenable: _selectedEvents,
+                    builder: (context, value, _) {
+                      return ListView.builder(
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: CalendarEvent(event: value[index]),
+                        );
+                      },
+                    );
+                  });
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

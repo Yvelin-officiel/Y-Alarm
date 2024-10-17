@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:y_alarm/calendar/models/event.dart';
 import 'package:y_alarm/calendar/service/event_controller.dart';
+import 'package:y_alarm/calendar/widget/calendar_event.dart';
 import 'package:y_alarm/calendar/widget/import_calendar.dart';
 import 'package:y_alarm/calendar/widget/Edit_event.dart';
 
@@ -50,7 +49,6 @@ class _CalendarState extends State<Calendar> {
     eventsList.sort((a, b) {
       return a.dtstart.compareTo(b.dtstart);
     });
-    print(eventsList);
     return eventsList;
   }
 
@@ -108,24 +106,7 @@ class _CalendarState extends State<Calendar> {
                               child: ListTile(
                                   title: Row(
                                 children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(value[index].summary),
-                                        Text(
-                                          DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day).isAtSameMomentAs(DateTime(value[index].dtstart.year, value[index].dtstart.month, value[index].dtstart.day))
-                                            ? DateFormat('hh:mm').format(value[index].dtstart)
-                                            : DateFormat('yyyy-MM-dd – hh:mm').format(value[index].dtstart)
-                                        ),
-                                        Text(
-                                          DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day).isAtSameMomentAs(DateTime(value[index].dtend.year, value[index].dtend.month, value[index].dtend.day))
-                                            ? DateFormat('hh:mm').format(value[index].dtend)
-                                            : DateFormat('yyyy-MM-dd – hh:mm').format(value[index].dtend)
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  CalendarEvent(event: value[index], focusedDay: _focusedDay,),
                                   IconButton(
                                       onPressed: () {
                                         if (value[index].id != null) {

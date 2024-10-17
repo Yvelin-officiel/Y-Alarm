@@ -1,3 +1,5 @@
+import 'package:flutter/src/widgets/async.dart';
+import 'package:flutter/src/widgets/basic.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:y_alarm/calendar/models/event.dart';
@@ -74,6 +76,17 @@ class EventController extends DataBaseHelper {
   Future<List<Event>> getAll() async {
     Database db = await instance.database;
     List<Map<String, dynamic>> maps = await db.query(_tableName);
+    return List.generate(maps.length, (i) => Event.fromJson(maps[i]));
+  }
+
+  Future<List<Event>> getForDay(DateTime day) async {
+    Database db = await instance.database;
+    day = DateTime(day.year, day.month, day.day);
+    List<Map<String, dynamic>> maps = await db.query(
+      _tableName,
+      where: 'dtstart <= ? AND dtend >= ?',
+      whereArgs: [day.add(const Duration(days: 1)).toIso8601String(), day.toIso8601String()],
+    );
     return List.generate(maps.length, (i) => Event.fromJson(maps[i]));
   }
 

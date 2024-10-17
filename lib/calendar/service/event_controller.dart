@@ -52,6 +52,25 @@ class EventController extends DataBaseHelper {
     return Event.fromJson(maps.first);
   }
 
+  Future<bool> exists(Event event) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> maps = [];
+    if (event.id == null) {
+      maps = await db.query(
+        _tableName,
+        where: 'uid = ? AND dtstart = ? AND dtend = ? AND summary = ? AND categories = ? AND dtstamp = ? AND lastModified = ?',
+        whereArgs: [event.uid],
+      );
+    } else {
+      maps = await db.query(
+        _tableName,
+        where: 'id = ?',
+        whereArgs: [event.id],
+      );
+    }
+    return maps.isNotEmpty;
+  }
+
   Future<List<Event>> getAll() async {
     Database db = await instance.database;
     List<Map<String, dynamic>> maps = await db.query(_tableName);

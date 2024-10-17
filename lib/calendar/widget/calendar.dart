@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:y_alarm/calendar/models/event.dart';
 import 'package:y_alarm/calendar/service/event_controller.dart';
-import 'Edit_event.dart';
+import 'package:y_alarm/calendar/widget/import_calendar.dart';
+import 'package:y_alarm/calendar/widget/Edit_event.dart';
 
 class Calendar extends StatefulWidget {
   final List<Event> events;
@@ -34,13 +38,19 @@ class _CalendarState extends State<Calendar> {
     day = DateTime(day.year, day.month, day.day);
     List<Event> eventsList = [];
     for (Event event in widget.events) {
-      if ((event.dtstart.isBefore(day) || event.dtstart.isAtSameMomentAs(day)) && (event.dtend.isAfter(day) || event.dtend.isAtSameMomentAs(day))) {
+      DateTime startDate = DateTime(event.dtstart.year, event.dtstart.month, event.dtstart.day);
+      DateTime endDate = DateTime(event.dtend.year, event.dtend.month, event.dtend.day);
+      if (
+        (startDate.isBefore(day) || startDate.isAtSameMomentAs(day)) &&
+        (endDate.isAfter(day) || endDate.isAtSameMomentAs(day))
+      ) {
         eventsList.add(event);
       }
     }
     eventsList.sort((a, b) {
       return a.dtstart.compareTo(b.dtstart);
     });
+    print(eventsList);
     return eventsList;
   }
 
@@ -99,8 +109,22 @@ class _CalendarState extends State<Calendar> {
                                   title: Row(
                                 children: [
                                   Expanded(
-                                    child: Text(
-                                        value[index].summary),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(value[index].summary),
+                                        Text(
+                                          DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day).isAtSameMomentAs(DateTime(value[index].dtstart.year, value[index].dtstart.month, value[index].dtstart.day))
+                                            ? DateFormat('hh:mm').format(value[index].dtstart)
+                                            : DateFormat('yyyy-MM-dd – hh:mm').format(value[index].dtstart)
+                                        ),
+                                        Text(
+                                          DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day).isAtSameMomentAs(DateTime(value[index].dtend.year, value[index].dtend.month, value[index].dtend.day))
+                                            ? DateFormat('hh:mm').format(value[index].dtend)
+                                            : DateFormat('yyyy-MM-dd – hh:mm').format(value[index].dtend)
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   IconButton(
                                       onPressed: () {
@@ -128,7 +152,10 @@ class _CalendarState extends State<Calendar> {
                     }))
           ],
         )),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+          FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
               showDialog(
@@ -136,7 +163,16 @@ class _CalendarState extends State<Calendar> {
                   builder: (context) => Edit_event(
                       setState, widget.reload, null
                       ));
+            }),
+            FloatingActionButton(
+            child: const Icon(Icons.calendar_month),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => ImportCalendar(file: null, reload: widget.reload,)
+              );
             })
+        ])
     );
   }
 }

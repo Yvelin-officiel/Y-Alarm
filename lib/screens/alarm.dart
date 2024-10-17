@@ -11,14 +11,7 @@ class Alarm extends StatelessWidget {
         appBar: AppBar(
           title: Text('Alarme'),
         ),
-        body: Column(children: [
-          ElevatedButton(
-            child: Text('Bienvenue sur la page alarme'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          Expanded(child: GetFenetre()),
-        ]));
+        body: Expanded(child: GetFenetre()),
+        );
   }
 }

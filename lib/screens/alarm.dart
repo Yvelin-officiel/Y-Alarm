@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:y_alarm/widgets/get_fenetre.dart';
+import 'package:y_alarm/widgets/infos_fenetre.dart';
 
 class Alarm extends StatelessWidget {
   const Alarm({super.key});

@@ -1,12 +1,22 @@
 // lib/widgets/alarm_dialog.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import '../models/alarm.dart';
 
 Future<Alarm?> showAlarmDialog(BuildContext context, {Alarm? existingAlarm}) {
-  final TextEditingController nameController = TextEditingController(text: existingAlarm?.name ?? '');
+  final TextEditingController nameController =
+      TextEditingController(text: existingAlarm?.name ?? '');
   TimeOfDay selectedTime = existingAlarm?.time ?? TimeOfDay.now();
   List<String> selectedDays = existingAlarm?.repeatDays ?? [];
-  final List<String> daysOfWeek = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  final List<String> daysOfWeek = [
+    'Lundi',
+    'Mardi',
+    'Mercredi',
+    'Jeudi',
+    'Vendredi',
+    'Samedi',
+    'Dimanche'
+  ];
 
   return showDialog<Alarm>(
     context: context,
@@ -14,13 +24,17 @@ Future<Alarm?> showAlarmDialog(BuildContext context, {Alarm? existingAlarm}) {
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           return AlertDialog(
-            title: Text(existingAlarm == null ? 'Ajouter un nouveau réveil' : 'Modifier le réveil'),
+            title: Text(existingAlarm == null
+                ? 'Ajouter un nouveau réveil'
+                : 'Modifier le réveil'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(hintText: 'Nom du réveil (laisser vide pour nom par défaut)'),
+                  decoration: const InputDecoration(
+                      hintText:
+                          'Nom du réveil (laisser vide pour nom par défaut)'),
                 ),
                 const SizedBox(height: 16.0),
                 Row(
@@ -77,12 +91,18 @@ Future<Alarm?> showAlarmDialog(BuildContext context, {Alarm? existingAlarm}) {
                 onPressed: () {
                   final newAlarm = Alarm(
                     id: existingAlarm?.id ?? DateTime.now().toString(),
-                    name: nameController.text.isNotEmpty ? nameController.text : 'Réveil à ${selectedTime.format(context)}', // Nom par défaut
+                    name: nameController.text.isNotEmpty
+                        ? nameController.text
+                        : 'Réveil à ${selectedTime.format(context)}', // Nom par défaut
                     time: selectedTime,
                     repeatDays: selectedDays,
                     isActive: existingAlarm?.isActive ?? true,
                   );
-                  Navigator.of(context).pop(newAlarm); // Retourne la nouvelle alarme
+                  // Creates an alarm at 23:59
+                  FlutterAlarmClock.createAlarm(
+                      hour: selectedTime.hour, minutes: selectedTime.minute);
+                  Navigator.of(context)
+                      .pop(newAlarm); // Retourne la nouvelle alarme
                 },
                 child: const Text('Enregistrer'),
               ),

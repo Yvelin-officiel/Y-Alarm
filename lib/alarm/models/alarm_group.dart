@@ -1,13 +1,25 @@
 import 'alarm.dart';
 
 class AlarmGroup {
-  String id;
+  int? id;
   String name;
-  List<Alarm> alarms;
 
   AlarmGroup({
-    required this.id,
+    this.id,
     required this.name,
-    this.alarms = const [],
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+    };
+  }
+
+  factory AlarmGroup.fromJson(Map<String, dynamic> json) {
+    return AlarmGroup(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
 }

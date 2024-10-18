@@ -8,10 +8,8 @@ import 'package:y_alarm/utils/database_helper.dart';
 class EventController extends DataBaseHelper {
   final _tableName = 'events';
 
-  EventController._privateConstructor();
-  static final EventController instance = EventController._privateConstructor();
+  static final EventController instance = EventController();
 
-  @override
   Future<void> onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE $_tableName (
@@ -28,13 +26,24 @@ class EventController extends DataBaseHelper {
     ''');
   }
 
+  Future<void> checkTable() async {
+    Database database = await instance.database;
+    try {
+      await database.rawQuery('SELECT 1 FROM $_tableName').then((value) => value.isEmpty);
+    } catch (e) {
+      await onCreate(await database, super.dbVersion);
+    }
+  }
+
   Future<Event> create(Event event) async {
+    await checkTable();
     Database db = await instance.database;
     event.id = await db.insert(_tableName, event.toJson());
     return event;
   }
 
   Future<Event> update(Event event) async {
+    await checkTable();
     Database db = await instance.database;
     await db.update(
       _tableName,
@@ -46,6 +55,7 @@ class EventController extends DataBaseHelper {
   }
 
   Future<Event> get(int id) async {
+    await checkTable();
     Database db = await instance.database;
     List<Map<String, dynamic>> maps = await db.query(
       _tableName,
@@ -56,6 +66,7 @@ class EventController extends DataBaseHelper {
   }
 
   Future<bool> exists(Event event) async {
+    await checkTable();
     Database db = await instance.database;
     List<Map<String, dynamic>> maps = [];
     if (event.id == null) {
@@ -75,12 +86,14 @@ class EventController extends DataBaseHelper {
   }
 
   Future<List<Event>> getAll() async {
+    await checkTable();
     Database db = await instance.database;
     List<Map<String, dynamic>> maps = await db.query(_tableName);
     return List.generate(maps.length, (i) => Event.fromJson(maps[i]));
   }
 
   Future<List<Event>> getForDay(DateTime day) async {
+    await checkTable();
     Database db = await instance.database;
     day = DateTime(day.year, day.month, day.day);
     List<Map<String, dynamic>> maps = await db.query(
@@ -92,6 +105,7 @@ class EventController extends DataBaseHelper {
   }
 
   Future<void> delete(int id) async {
+    await checkTable();
     Database db = await instance.database;
     await db.delete(
       _tableName,
@@ -101,6 +115,7 @@ class EventController extends DataBaseHelper {
   }
 
   Future<Event> save(Event event) async {
+    await checkTable();
     if (event.id == null) {
       return create(event);
     } else {

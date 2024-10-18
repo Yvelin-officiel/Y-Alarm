@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../models/alarm.dart';
 
-Future<Alarm?> showAlarmDialog(BuildContext context, {Alarm? existingAlarm}) {
+Future<Alarm?> showAlarmDialog(BuildContext context, int groupeId, {Alarm? existingAlarm}) {
   final TextEditingController nameController = TextEditingController(text: existingAlarm?.name ?? '');
   TimeOfDay selectedTime = existingAlarm?.time ?? TimeOfDay.now();
   List<String> selectedDays = existingAlarm?.repeatDays ?? [];
@@ -76,11 +76,11 @@ Future<Alarm?> showAlarmDialog(BuildContext context, {Alarm? existingAlarm}) {
               TextButton(
                 onPressed: () {
                   final newAlarm = Alarm(
-                    id: existingAlarm?.id ?? DateTime.now().toString(),
                     name: nameController.text.isNotEmpty ? nameController.text : 'Réveil à ${selectedTime.format(context)}', // Nom par défaut
                     time: selectedTime,
                     repeatDays: selectedDays,
                     isActive: existingAlarm?.isActive ?? true,
+                    groupeId: groupeId,
                   );
                   Navigator.of(context).pop(newAlarm); // Retourne la nouvelle alarme
                 },

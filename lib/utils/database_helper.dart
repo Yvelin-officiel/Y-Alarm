@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 abstract class DataBaseHelper {
   final _dbName = 'YAlarm.db';
-  final _dbVersion = 1;
+  final dbVersion = 1;
 
   static Database? _database;
   Future<Database> get database async {
@@ -14,8 +14,6 @@ abstract class DataBaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), _dbName);
-    return await openDatabase(path, version: _dbVersion, onCreate: onCreate); // Utiliser une fonction abstraite
+    return await openDatabase(path, version: dbVersion); // Utiliser une fonction abstraite
   }
-
-  Future<void> onCreate(Database db, int version);
 }

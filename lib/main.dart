@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'widgets/infos_fenetre.dart';
 import 'package:y_alarm/calendar/models/event.dart';
 import 'package:y_alarm/calendar/service/event_controller.dart';
 
@@ -14,8 +13,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
+// Fonction pour construire l'application
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,11 +42,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
+  // Variables pour la récupération de la météo
   String apiKey = '822f25ce79782c1d6d9562e2f66d5067'; // clé API OpenWeatherMap
   String city = 'Nantes'; // ville souhaitée
   var weatherData;
 
+// Fonction pour récupérer la météo via l'API OpenWeatherMap
   @override
   void initState() {
     super.initState();
@@ -67,16 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print('Erreur lors de la récupération des données météo');
     }
-class _HomePageState extends State<HomePage> {
-  
-  void _navigateToCalendarPage() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Calendar_Page()),
-    );
-    setState(() {});
   }
 
+// Fonction pour naviguer vers la page de l'alarme
   void _navigateToAlarmPage() async {
     await Navigator.push(
       context,
@@ -85,54 +80,66 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+// Fonction pour naviguer vers la page du calendrier
+  void _navigateToCalendarPage() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Calendar_Page()),
+    );
+    setState(() {});
+  }
+
+  // Fonction pour naviguer vers la page de l'événement
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.calendar_today),
-            onPressed: () {
-              _navigateToCalendarPage();
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.alarm),
-            onPressed: () {
-              _navigateToAlarmPage();
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () {
+                _navigateToCalendarPage();
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            IconButton(
+              icon: Icon(Icons.alarm),
+              onPressed: () {
+                _navigateToAlarmPage();
+              },
             ),
           ],
         ),
-      ),
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Section pour afficher la météo
+              weatherData == null
+                  ? const CircularProgressIndicator()
+                  : Column(
+                      children: [
+                        Text(
+                          'Météo à $city',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        Text(
+                          '${weatherData['main']['temp']}°C',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        Text(
+                          '${weatherData['weather'][0]['description']}',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          'Humidité: ${weatherData['main']['humidity']}%',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+            ],
+          ),
+        ));
   }
 }

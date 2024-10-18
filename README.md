@@ -1,6 +1,6 @@
 # Y-Alarm
 
-Hackathon de M1 Info avec comm thème **"*EdTech, un outil pour réussir mes études*"**
+Hackathon de M1 Info avec comme thème **"*EdTech, un outil pour réussir mes études*"**
 
 Application de réveil personalisé permettant à son utilisateur de dévérouiller ses chakras dès le premier instant de la journée.
 

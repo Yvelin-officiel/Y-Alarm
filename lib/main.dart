@@ -4,6 +4,7 @@ import 'package:y_alarm/calendar/service/event_controller.dart';
 
 import 'package:y_alarm/calendar/widget/Calendar_page.dart';
 import 'package:y_alarm/calendar/widget/calendar_event.dart';
+import 'package:y_alarm/alarm/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,6 +49,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  void _navigateToAlarmPage() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +68,12 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.calendar_today),
             onPressed: () {
               _navigateToCalendarPage();
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.alarm),
+            onPressed: () {
+              _navigateToAlarmPage();
             },
           ),
         ],

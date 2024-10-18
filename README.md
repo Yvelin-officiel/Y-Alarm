@@ -37,7 +37,7 @@ samples, guidance on mobile development, and a full API reference.
 - [ ] 8. L'utilisateur peut paramétrer une musique de fond
 
 ### fonctionnalités bonus:
-- [ ] 9. L'alarme joue des musique aléatoires
+- [ ] 9. L'alarme joue des musiques aléatoires
 - [ ] 10. L'alarme énonce la météo du jour
 - [ ] 11. L'alarme énonce des facts aléatoires (relativement fausses)
 - [ ] 12. L'alarme énonce les réveils de préparation

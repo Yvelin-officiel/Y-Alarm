@@ -40,11 +40,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   
-  void _navigateToCalendarPage() {
-    Navigator.push(
+  void _navigateToCalendarPage() async {
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Calendar_Page()),
     );
+    setState(() {});
   }
 
   @override

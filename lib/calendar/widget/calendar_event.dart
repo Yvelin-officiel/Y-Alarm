@@ -18,6 +18,7 @@ class CalendarEvent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(event.summary),
+          Text(event.location),
           Text(
             DateTime(focusedDay!.year, focusedDay!.month, focusedDay!.day).isAtSameMomentAs(DateTime(event.dtstart.year, event.dtstart.month, event.dtstart.day))
               ? DateFormat('hh:mm').format(event.dtstart)

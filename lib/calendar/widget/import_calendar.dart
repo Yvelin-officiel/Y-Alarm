@@ -53,7 +53,7 @@ class _ImportCalendarState extends State<ImportCalendar> {
 
     return AlertDialog(
       scrollable: true,
-      title: const Text('Add Event'),
+      title: const Text('Import Calendar'),
       actions: [
         ElevatedButton(
           onPressed: () async {
@@ -74,7 +74,7 @@ class _ImportCalendarState extends State<ImportCalendar> {
               widget.reload();
             }
           },
-          child: Text("Import"),
+          child: const Text("Import"),
         ),
       ],
       content: Padding(

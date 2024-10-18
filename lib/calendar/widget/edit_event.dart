@@ -8,6 +8,7 @@ class Edit_event extends StatelessWidget {
     
   TextEditingController _categoriesController = TextEditingController();
   TextEditingController _uidController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
   TextEditingController _dtstartController = TextEditingController();
   TextEditingController _dtendController = TextEditingController();
 
@@ -24,6 +25,7 @@ class Edit_event extends StatelessWidget {
     if (event != null) {
       _categoriesController.text = event!.categories;
       _uidController.text = event!.uid;
+      _locationController.text = event!.location;
       _dtstartController.text = event!.dtstart.toString();
       _dtendController.text = event!.dtend.toString();
     }
@@ -46,6 +48,13 @@ class Edit_event extends StatelessWidget {
               autofocus: true,
               decoration: const InputDecoration(
                 labelText: 'Event Name',
+              ),
+            ),
+            TextFormField(
+              controller: _locationController,
+              autofocus: true,
+              decoration: const InputDecoration(
+                labelText: 'Event Location',
               ),
             ),
             TextField(
@@ -81,6 +90,7 @@ class Edit_event extends StatelessWidget {
                   dtstart: DateTime.parse(_dtstartController.text),
                   dtend: DateTime.parse(_dtendController.text),
                   summary: _uidController.text,
+                  location: _locationController.text,
                 );
                 Navigator.of(context).pop();
                 _categoriesController.clear();

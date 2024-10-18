@@ -22,7 +22,8 @@ class EventController extends DataBaseHelper {
         uid TEXT NOT NULL,
         dtstart TEXT NOT NULL,
         dtend TEXT NOT NULL,
-        summary TEXT NOT NULL
+        summary TEXT NOT NULL,
+        location TEXT NOT NULL
       )
     ''');
   }
@@ -60,8 +61,8 @@ class EventController extends DataBaseHelper {
     if (event.id == null) {
       maps = await db.query(
         _tableName,
-        where: 'uid = ? AND dtstart = ? AND dtend = ? AND summary = ? AND categories = ? AND dtstamp = ? AND lastModified = ?',
-        whereArgs: [event.uid],
+        where: 'uid = ? AND dtstart = ? AND dtend = ? AND summary = ? AND categories = ? AND dtstamp = ? AND lastModified = ? AND location = ?',
+        whereArgs: [event.uid, event.dtstart.toIso8601String(), event.dtend.toIso8601String(), event.summary, event.categories, event.dtstamp.toIso8601String(), event.lastModified.toIso8601String(), event.location],
       );
     } else {
       maps = await db.query(

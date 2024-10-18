@@ -57,7 +57,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String apiKey = '822f25ce79782c1d6d9562e2f66d5067'; // clé API OpenWeatherMap
   String city = 'Nantes'; // ville souhaitée
   var weatherData;
@@ -71,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Fonction pour récupérer la météo via l'API OpenWeatherMap
   Future<void> fetchWeather() async {
     var url = Uri.parse(
-      'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric',
+      'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric&lang=fr',
     );
     var response = await http.get(url);
 
@@ -82,17 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print('Erreur lors de la récupération des données météo');
     }
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
   }
 
   @override
@@ -111,21 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 40),
             // Section pour afficher la météo
             weatherData == null
                 ? const CircularProgressIndicator()
                 : Column(
               children: [
                 Text(
-                  'Weather in $city',
+                  'Météo à $city',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
@@ -133,11 +113,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 Text(
-                  'Condition: ${weatherData['weather'][0]['description']}',
+                  '${weatherData['weather'][0]['description']}',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  'Humidity: ${weatherData['main']['humidity']}%',
+                  'Humidité: ${weatherData['main']['humidity']}%',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
@@ -145,11 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

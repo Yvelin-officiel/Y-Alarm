@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'widgets/infos_fenetre.dart';
 import 'package:y_alarm/calendar/models/event.dart';
 import 'package:y_alarm/calendar/service/event_controller.dart';
 
 import 'package:y_alarm/calendar/widget/Calendar_page.dart';
 import 'package:y_alarm/calendar/widget/calendar_event.dart';
 import 'package:y_alarm/alarm/screens/home_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+// Fonction pour construire l'application
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,15 +43,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
-  void _navigateToCalendarPage() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Calendar_Page()),
-    );
-    setState(() {});
+  // Variables pour la récupération de la météo
+  String apiKey = '822f25ce79782c1d6d9562e2f66d5067'; // clé API OpenWeatherMap
+  String city = 'Nantes'; // ville souhaitée
+  var weatherData;
+
+// Fonction pour récupérer la météo via l'API OpenWeatherMap
+  @override
+  void initState() {
+    super.initState();
+    fetchWeather();
   }
 
+  // Fonction pour récupérer la météo via l'API OpenWeatherMap
+  Future<void> fetchWeather() async {
+    var url = Uri.parse(
+      'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric&lang=fr',
+    );
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        weatherData = json.decode(response.body);
+      });
+    } else {
+      print('Erreur lors de la récupération des données météo');
+    }
+  }
+
+// Fonction pour naviguer vers la page de l'alarme
   void _navigateToAlarmPage() async {
     await Navigator.push(
       context,
@@ -58,6 +80,16 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+// Fonction pour naviguer vers la page du calendrier
+  void _navigateToCalendarPage() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Calendar_Page()),
+    );
+    setState(() {});
+  }
+
+  // Fonction pour naviguer vers la page de l'événement
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,10 +144,33 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Expanded(child: GetFenetre()),
+            <Widget>[
+              // Section pour afficher la météo
+              weatherData == null
+                  ? const CircularProgressIndicator()
+                  : Column(
+                      children: [
+                        Text(
+                          'Météo à $city',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        Text(
+                          '${weatherData['main']['temp']}°C',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        Text(
+                          '${weatherData['weather'][0]['description']}',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          'Humidité: ${weatherData['main']['humidity']}%',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+            ],
           ],
         ),
-      ),
-    );
+        ));
   }
 }

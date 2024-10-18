@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('Erreur lors du chargement');
                   }
 
                   ValueNotifier<List<Event>> selectedEvents = ValueNotifier(snapshot.data ?? []);
@@ -144,9 +144,10 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            <Widget>[
+            SizedBox(
+              height: 250,
               // Section pour afficher la météo
-              weatherData == null
+              child: weatherData == null
                   ? const CircularProgressIndicator()
                   : Column(
                       children: [
@@ -168,9 +169,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
+            ),
             ],
-          ],
         ),
-        ));
+        ),
+        );
   }
 }

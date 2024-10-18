@@ -6,7 +6,7 @@ import 'package:y_alarm/calendar/widget/Calendar.dart';
 // import 'calendar.dart';
 
 class Calendar_Page extends StatefulWidget {
-  const Calendar_Page({Key? key}) : super(key: key);
+  const Calendar_Page({super.key});
 
   @override
   State<Calendar_Page> createState() => _Calendar_PageState();

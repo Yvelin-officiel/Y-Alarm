@@ -6,17 +6,17 @@ import 'package:y_alarm/calendar/service/event_controller.dart';
 
 class Edit_event extends StatelessWidget {
     
-  TextEditingController _categoriesController = TextEditingController();
-  TextEditingController _uidController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
-  TextEditingController _dtstartController = TextEditingController();
-  TextEditingController _dtendController = TextEditingController();
+  final TextEditingController _categoriesController = TextEditingController();
+  final TextEditingController _uidController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _dtstartController = TextEditingController();
+  final TextEditingController _dtendController = TextEditingController();
 
   Function setState;
   Function reload;
   Event? event;
 
-  Edit_event(this.setState, this.reload, this.event);
+  Edit_event(this.setState, this.reload, this.event, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,6 @@ class Edit_event extends StatelessWidget {
           controller.text = formattedTime; //set the value of text field.
         });
       } else {
-        print("Time is not selected");
       }
   }}
 }

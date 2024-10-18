@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
 import 'package:y_alarm/utils/database_helper.dart';
-import 'package:y_alarm/alarm/service/alarm_group_controller.dart';
 import 'package:y_alarm/alarm/models/alarm.dart';
 
 class AlarmController extends DataBaseHelper {

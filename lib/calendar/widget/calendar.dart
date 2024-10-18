@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:y_alarm/calendar/models/event.dart';
@@ -12,7 +11,7 @@ class Calendar extends StatefulWidget {
   final List<Event> events;
   final Function reload;
 
-  const Calendar({Key? key, required this.events, required this.reload}) : super(key: key);
+  const Calendar({super.key, required this.events, required this.reload});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -112,7 +111,7 @@ class _CalendarState extends State<Calendar> {
                                         if (value[index].id != null) {
                                           eventController.delete(value[index].id!);
                                           widget.reload();
-                                        };
+                                        }
                                       },
                                       icon: const Icon(Icons.delete)),
                                   IconButton(

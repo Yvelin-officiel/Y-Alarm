@@ -11,7 +11,7 @@ class ImportCalendar extends StatefulWidget {
   String? error;
   Function reload;
 
-  ImportCalendar({Key? key, required this.file, required this.reload, this.error}) : super(key: key);
+  ImportCalendar({super.key, required this.file, required this.reload, this.error});
 
   @override
   _ImportCalendarState createState() => _ImportCalendarState();

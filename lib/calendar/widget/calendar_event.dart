@@ -8,7 +8,7 @@ class CalendarEvent extends StatelessWidget {
   Event event;
   DateTime? focusedDay;
 
-  CalendarEvent({Key? key, required this.event, this.focusedDay}) : super(key: key);
+  CalendarEvent({super.key, required this.event, this.focusedDay});
 
   @override
   Widget build(BuildContext context) {

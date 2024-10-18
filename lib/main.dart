@@ -12,7 +12,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+  const HomePage({super.key, required this.title});
 
   final String title;
 
@@ -96,9 +96,9 @@ class _HomePageState extends State<HomePage> {
                     return Text('Error: ${snapshot.error}');
                   }
 
-                  ValueNotifier<List<Event>> _selectedEvents = ValueNotifier(snapshot.data ?? []);
+                  ValueNotifier<List<Event>> selectedEvents = ValueNotifier(snapshot.data ?? []);
                   return ValueListenableBuilder<List<Event>>(
-                    valueListenable: _selectedEvents,
+                    valueListenable: selectedEvents,
                     builder: (context, value, _) {
                       return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,

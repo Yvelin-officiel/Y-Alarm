@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets/infos_fenetre.dart';
 import 'package:y_alarm/calendar/models/event.dart';
 import 'package:y_alarm/calendar/service/event_controller.dart';
 
@@ -111,6 +112,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            Expanded(child: GetFenetre()),
           ],
         ),
       ),
